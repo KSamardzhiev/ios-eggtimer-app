@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
-    
     @IBOutlet weak var softEggImageView: UIImageView!
     @IBOutlet weak var mediumEggImageView: UIImageView!
     @IBOutlet weak var hardEggImageView: UIImageView!
@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     let totalTimeSoftEgg = 5 * 60
     let totalTimeMediumEgg = 7 * 60
     let totalTimeHardEgg = 12 * 60
+    
+    var player: AVAudioPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +90,28 @@ class ViewController: UIViewController {
                 timer.invalidate()
                 self.timer = nil
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
+                playSound()
+                prepareUIBasedOnSegment(hardness: totalTimeSelected)
+                self.startStopButton.setTitle("Start", for: .normal)
             }
+        }
+    }
+    
+    func playSound() {
+        guard let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3") else { return }
+
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+
+            guard let player = player else { return }
+
+            player.play()
+
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     

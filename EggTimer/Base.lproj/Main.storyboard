@@ -88,7 +88,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zz8-Nt-ubY">
                                                 <rect key="frame" x="10" y="0.0" width="394" height="266"/>
                                                 <subviews>
-                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="gFO-iA-zEg">
+                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gFO-iA-zEg">
                                                         <rect key="frame" x="0.0" y="0.0" width="394" height="4"/>
                                                         <color key="tintColor" systemColor="systemYellowColor"/>
                                                     </progressView>
