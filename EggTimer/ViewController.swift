@@ -21,11 +21,10 @@ class ViewController: UIViewController {
     var timer:Timer?
     var totalTime:Int = 0
     var totalTimeSelected:Int = 0
-    let totalTimeSoftEgg = 180
-    let totalTimeMediumEgg = 300
-    let totalTimeHardEgg = 420
-    
-    
+    let totalTimeSoftEgg = 5 * 60
+    let totalTimeMediumEgg = 7 * 60
+    let totalTimeHardEgg = 12 * 60
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.totalTime = totalTimeSoftEgg
@@ -33,28 +32,31 @@ class ViewController: UIViewController {
     }
 
     @IBAction func eggSegment(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            self.totalTime = totalTimeSoftEgg
-            self.totalTimeSelected = totalTimeSoftEgg
-            self.timerLabel.text = self.timeFormatted(self.totalTime)
+        switch sender.selectedSegmentIndex {
+        case 0:
+            self.prepareUIBasedOnSegment(hardness: totalTimeSoftEgg)
             self.softEggImageView.alpha = 1
             self.mediumEggImageView.alpha = 0.5
             self.hardEggImageView.alpha = 0.5
-        } else if sender.selectedSegmentIndex == 1 {
-            self.totalTime = totalTimeMediumEgg
-            self.totalTimeSelected = totalTimeMediumEgg
-            self.timerLabel.text = self.timeFormatted(self.totalTime)
+        case 1:
+            self.prepareUIBasedOnSegment(hardness: totalTimeMediumEgg)
             self.softEggImageView.alpha = 0.5
             self.mediumEggImageView.alpha = 1
             self.hardEggImageView.alpha = 0.5
-        } else if sender.selectedSegmentIndex == 2 {
-            self.totalTime = totalTimeHardEgg
-            self.totalTimeSelected = totalTimeHardEgg
-            self.timerLabel.text = self.timeFormatted(self.totalTime)
+        case 2:
+            self.prepareUIBasedOnSegment(hardness: totalTimeHardEgg)
             self.softEggImageView.alpha = 0.5
             self.mediumEggImageView.alpha = 0.5
             self.hardEggImageView.alpha = 1
+        default:
+            print("Not available option!")
         }
+    }
+    
+    func prepareUIBasedOnSegment(hardness:Int) {
+        self.totalTime = hardness
+        self.totalTimeSelected = hardness
+        self.timerLabel.text = self.timeFormatted(self.totalTime)
     }
     
     @IBAction func startStopButtonPressed(_ sender: UIButton) {
@@ -72,7 +74,7 @@ class ViewController: UIViewController {
     func timeFormatted(_ totalSeconds: Int) -> String {
         let seconds: Int = totalSeconds % 60
         let minutes: Int = (totalSeconds / 60) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        return String(format: "%02d:%02d min", minutes, seconds)
     }
     
     @objc func updateTimer() {
